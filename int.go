@@ -1,6 +1,11 @@
 package goutils
 
-import "strconv"
+import (
+	"errors"
+	"strconv"
+	"sync/atomic"
+	"unsafe"
+)
 
 /**
   @author : Jerbe - The porter from Earth
@@ -161,4 +166,106 @@ func Int32BitClear(val int32, position int) int32 {
 // Int64BitClear 清理设置某一位的数值为0,从右到左方向
 func Int64BitClear(val int64, position int) int64 {
 	return val &^ (1 << position)
+}
+
+// AtomicAdd 原子增加
+func AtomicAdd(dst interface{}, delta int) interface{} {
+	switch d := dst.(type) {
+	case *int64:
+		return atomic.AddInt64(d, int64(delta))
+	case *int32:
+		return atomic.AddInt32(d, int32(delta))
+	case *int16:
+		n := (*int32)(unsafe.Pointer(d))
+		return int16(atomic.AddInt32(n, int32(delta)))
+	case *int8:
+		n := (*int32)(unsafe.Pointer(d))
+		return int8(atomic.AddInt32(n, int32(delta)))
+	case *int:
+		n := (*int32)(unsafe.Pointer(d))
+		return int(atomic.AddInt32(n, int32(delta)))
+	case *uint:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint(atomic.AddUint32(n, uint32(delta)))
+	case *uint8:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint8(atomic.AddUint32(n, uint32(delta)))
+	case *uint16:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint16(atomic.AddUint32(n, uint32(delta)))
+	case *uint32:
+		return atomic.AddUint32(d, uint32(delta))
+	case *uint64:
+		return atomic.AddUint64(d, uint64(delta))
+	default:
+		panic(errors.New("unsupported type"))
+	}
+}
+
+// AtomicStore 原子存储
+func AtomicStore(dst interface{}, val int) {
+	switch d := dst.(type) {
+	case *int64:
+		atomic.StoreInt64(d, int64(val))
+	case *int32:
+		atomic.StoreInt32(d, int32(val))
+	case *int16:
+		n := (*int32)(unsafe.Pointer(d))
+		atomic.StoreInt32(n, int32(val))
+	case *int8:
+		n := (*int32)(unsafe.Pointer(d))
+		atomic.StoreInt32(n, int32(val))
+	case *int:
+		n := (*int32)(unsafe.Pointer(d))
+		atomic.StoreInt32(n, int32(val))
+	case *uint:
+		n := (*uint32)(unsafe.Pointer(d))
+		atomic.StoreUint32(n, uint32(val))
+	case *uint8:
+		n := (*uint32)(unsafe.Pointer(d))
+		atomic.StoreUint32(n, uint32(val))
+	case *uint16:
+		n := (*uint32)(unsafe.Pointer(d))
+		atomic.StoreUint32(n, uint32(val))
+	case *uint32:
+		atomic.StoreUint32(d, uint32(val))
+	case *uint64:
+		atomic.StoreUint64(d, uint64(val))
+	default:
+		panic(errors.New("unsupported type"))
+	}
+}
+
+// AtomicLoad 原子加载
+func AtomicLoad(dst interface{}) interface{} {
+	switch d := dst.(type) {
+	case *int64:
+		return atomic.LoadInt64(d)
+	case *int32:
+		return atomic.LoadInt32(d)
+	case *int16:
+		n := (*int32)(unsafe.Pointer(d))
+		return int16(atomic.LoadInt32(n))
+	case *int8:
+		n := (*int32)(unsafe.Pointer(d))
+		return int8(atomic.LoadInt32(n))
+	case *int:
+		n := (*int32)(unsafe.Pointer(d))
+		return int(atomic.LoadInt32(n))
+	case *uint:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint(atomic.LoadUint32(n))
+	case *uint8:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint8(atomic.LoadUint32(n))
+	case *uint16:
+		n := (*uint32)(unsafe.Pointer(d))
+		return uint16(atomic.LoadUint32(n))
+	case *uint32:
+		return atomic.LoadUint32(d)
+	case *uint64:
+		return atomic.LoadUint64(d)
+	default:
+		panic(errors.New("unsupported type"))
+	}
 }
