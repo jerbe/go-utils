@@ -33,6 +33,10 @@ func Int64Len(val int64) int {
 	return len(strconv.FormatInt(val, 10))
 }
 
+//----------------------------------------------------------
+//------------------- SORT ---------------------------------
+//----------------------------------------------------------
+
 // IntSort 排序整型
 // 返回的数据总是 a <= b
 func IntSort(a, b int) (int, int) {
@@ -123,53 +127,163 @@ func Int64Between(dest, from, to int64) bool {
 	return false
 }
 
+//----------------------------------------------------------
+//----------------- ATOMIC ---------------------------------
+//----------------------------------------------------------
+
 // IntBitSet 填充设置某一位的数值为1,从右到左方向
-func IntBitSet(val int, position int) int {
-	return val | (1 << position)
-}
+func IntBitSet(val interface{}, position int) interface{} {
+	switch v := val.(type) {
+	case int:
+		return v | (1 << position)
+	case uint:
+		return v | (1 << position)
+	case int8:
+		return v | (1 << position)
+	case uint8:
+		return v | (1 << position)
+	case int16:
+		return v | (1 << position)
+	case uint16:
+		return v | (1 << position)
+	case int32:
+		return v | (1 << position)
+	case uint32:
+		return v | (1 << position)
+	case int64:
+		return v | (1 << position)
+	case uint64:
+		return v | (1 << position)
 
-// Int16BitSet 填充设置某一位的数值为1,从右到左方向
-func Int16BitSet(val int16, position int) int16 {
-	return val | (1 << position)
-}
-
-// Int32BitSet 填充设置某一位的数值为1,从右到左方向
-func Int32BitSet(val int32, position int) int32 {
-	return val | (1 << position)
-}
-
-// Int64BitSet 填充设置某一位的数值为1,从右到左方向
-func Int64BitSet(val int64, position int) int64 {
-	return val | (1 << position)
+	case *int:
+		return *v | (1 << position)
+	case *uint:
+		return *v | (1 << position)
+	case *int8:
+		return *v | (1 << position)
+	case *uint8:
+		return *v | (1 << position)
+	case *int16:
+		return *v | (1 << position)
+	case *uint16:
+		return *v | (1 << position)
+	case *int32:
+		return *v | (1 << position)
+	case *uint32:
+		return *v | (1 << position)
+	case *int64:
+		return *v | (1 << position)
+	case *uint64:
+		return *v | (1 << position)
+	default:
+		panic("no int")
+	}
 }
 
 // IntBitClear 清理设置某一位的数值为0,从右到左方向
-func IntBitClear(val int, position int) int {
-	return val &^ (1 << position)
+func IntBitClear(val interface{}, position int) interface{} {
+	switch v := val.(type) {
+	case int:
+		return v &^ (1 << position)
+	case uint:
+		return v &^ (1 << position)
+	case int8:
+		return v &^ (1 << position)
+	case uint8:
+		return v &^ (1 << position)
+	case int16:
+		return v &^ (1 << position)
+	case uint16:
+		return v &^ (1 << position)
+	case int32:
+		return v &^ (1 << position)
+	case uint32:
+		return v &^ (1 << position)
+	case int64:
+		return v &^ (1 << position)
+	case uint64:
+		return v &^ (1 << position)
+
+	case *int:
+		return *v &^ (1 << position)
+	case *uint:
+		return *v &^ (1 << position)
+	case *int8:
+		return *v &^ (1 << position)
+	case *uint8:
+		return *v &^ (1 << position)
+	case *int16:
+		return *v &^ (1 << position)
+	case *uint16:
+		return *v &^ (1 << position)
+	case *int32:
+		return *v &^ (1 << position)
+	case *uint32:
+		return *v &^ (1 << position)
+	case *int64:
+		return *v &^ (1 << position)
+	case *uint64:
+		return *v &^ (1 << position)
+	default:
+		panic("no int")
+	}
 }
 
-// Int8BitClear 清理设置某一位的数值为0,从右到左方向
-func Int8BitClear(val int8, position int) int8 {
-	return val &^ (1 << position)
+// IntBitCheck 检测某一位的数值是否为1,从右到左方向
+func IntBitCheck(val interface{}, position int) bool {
+	switch v := val.(type) {
+	case int:
+		return v&(1<<position) != 0
+	case uint:
+		return v&(1<<position) != 0
+	case int8:
+		return v&(1<<position) != 0
+	case uint8:
+		return v&(1<<position) != 0
+	case int16:
+		return v&(1<<position) != 0
+	case uint16:
+		return v&(1<<position) != 0
+	case int32:
+		return v&(1<<position) != 0
+	case uint32:
+		return v&(1<<position) != 0
+	case int64:
+		return v&(1<<position) != 0
+	case uint64:
+		return v&(1<<position) != 0
+
+	case *int:
+		return *v&(1<<position) != 0
+	case *uint:
+		return *v&(1<<position) != 0
+	case *int8:
+		return *v&(1<<position) != 0
+	case *uint8:
+		return *v&(1<<position) != 0
+	case *int16:
+		return *v&(1<<position) != 0
+	case *uint16:
+		return *v&(1<<position) != 0
+	case *int32:
+		return *v&(1<<position) != 0
+	case *uint32:
+		return *v&(1<<position) != 0
+	case *int64:
+		return *v&(1<<position) != 0
+	case *uint64:
+		return *v&(1<<position) != 0
+	default:
+		panic("no int")
+	}
 }
 
-// Int16BitClear 清理设置某一位的数值为0,从右到左方向
-func Int16BitClear(val int16, position int) int16 {
-	return val &^ (1 << position)
-}
+//----------------------------------------------------------
+//----------------- ATOMIC ---------------------------------
+//----------------------------------------------------------
 
-// Int32BitClear 清理设置某一位的数值为0,从右到左方向
-func Int32BitClear(val int32, position int) int32 {
-	return val &^ (1 << position)
-}
-
-// Int64BitClear 清理设置某一位的数值为0,从右到左方向
-func Int64BitClear(val int64, position int) int64 {
-	return val &^ (1 << position)
-}
-
-// AtomicAdd 原子增加
-func AtomicAdd(dst interface{}, delta int) interface{} {
+// AtomicAddInt 原子增加
+func AtomicAddInt(dst interface{}, delta int64) interface{} {
 	switch d := dst.(type) {
 	case *int64:
 		return atomic.AddInt64(d, int64(delta))
@@ -202,8 +316,9 @@ func AtomicAdd(dst interface{}, delta int) interface{} {
 	}
 }
 
-// AtomicStore 原子存储
-func AtomicStore(dst interface{}, val int) {
+// AtomicStoreInt 原子存储
+func AtomicStoreInt(dst interface{}, val int64) {
+
 	switch d := dst.(type) {
 	case *int64:
 		atomic.StoreInt64(d, int64(val))
@@ -236,8 +351,8 @@ func AtomicStore(dst interface{}, val int) {
 	}
 }
 
-// AtomicLoad 原子加载
-func AtomicLoad(dst interface{}) interface{} {
+// AtomicLoadInt 原子加载
+func AtomicLoadInt(dst interface{}) interface{} {
 	switch d := dst.(type) {
 	case *int64:
 		return atomic.LoadInt64(d)
@@ -265,6 +380,82 @@ func AtomicLoad(dst interface{}) interface{} {
 		return atomic.LoadUint32(d)
 	case *uint64:
 		return atomic.LoadUint64(d)
+	default:
+		panic(errors.New("unsupported type"))
+	}
+}
+
+// AtomicCompareAndSwapInt 原子对比并替换
+func AtomicCompareAndSwapInt(dst interface{}, oldVal, newVal interface{}) bool {
+	switch d := dst.(type) {
+	case *int64:
+		o, n := oldVal.(int64), newVal.(int64)
+		return atomic.CompareAndSwapInt64(d, o, n)
+	case *int32:
+		o, n := oldVal.(int32), newVal.(int32)
+		return atomic.CompareAndSwapInt32(d, o, n)
+	case *int16:
+		o, n, nd := int32(oldVal.(int16)), int32(newVal.(int16)), (*int32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapInt32(nd, o, n)
+	case *int8:
+		o, n, nd := int32(oldVal.(int8)), int32(newVal.(int8)), (*int32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapInt32(nd, o, n)
+	case *int:
+		o, n, nd := int32(oldVal.(int)), int32(newVal.(int)), (*int32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapInt32(nd, o, n)
+	case *uint:
+		o, n, nd := uint32(oldVal.(uint)), uint32(newVal.(uint)), (*uint32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapUint32(nd, o, n)
+	case *uint8:
+		o, n, nd := uint32(oldVal.(uint8)), uint32(newVal.(uint8)), (*uint32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapUint32(nd, o, n)
+	case *uint16:
+		o, n, nd := uint32(oldVal.(uint16)), uint32(newVal.(uint16)), (*uint32)(unsafe.Pointer(d))
+		return atomic.CompareAndSwapUint32(nd, o, n)
+	case *uint32:
+		o, n := oldVal.(uint32), newVal.(uint32)
+		return atomic.CompareAndSwapUint32(d, o, n)
+	case *uint64:
+		o, n := oldVal.(uint64), newVal.(uint64)
+		return atomic.CompareAndSwapUint64(d, o, n)
+	default:
+		panic(errors.New("unsupported type"))
+	}
+}
+
+// AtomicSwapInt 原子替换
+func AtomicSwapInt(dst interface{}, newVal interface{}) interface{} {
+	switch d := dst.(type) {
+	case *int64:
+		n := newVal.(int64)
+		return atomic.SwapInt64(d, n)
+	case *int32:
+		n := newVal.(int32)
+		return atomic.SwapInt32(d, n)
+	case *int16:
+		n, nd := int32(newVal.(int16)), (*int32)(unsafe.Pointer(d))
+		return atomic.SwapInt32(nd, n)
+	case *int8:
+		n, nd := int32(newVal.(int8)), (*int32)(unsafe.Pointer(d))
+		return atomic.SwapInt32(nd, n)
+	case *int:
+		n, nd := int32(newVal.(int)), (*int32)(unsafe.Pointer(d))
+		return atomic.SwapInt32(nd, n)
+	case *uint:
+		n, nd := uint32(newVal.(uint)), (*uint32)(unsafe.Pointer(d))
+		return atomic.SwapUint32(nd, n)
+	case *uint8:
+		n, nd := uint32(newVal.(uint8)), (*uint32)(unsafe.Pointer(d))
+		return atomic.SwapUint32(nd, n)
+	case *uint16:
+		n, nd := uint32(newVal.(uint16)), (*uint32)(unsafe.Pointer(d))
+		return atomic.SwapUint32(nd, n)
+	case *uint32:
+		n := newVal.(uint32)
+		return atomic.SwapUint32(d, n)
+	case *uint64:
+		n := newVal.(uint64)
+		return atomic.SwapUint64(d, n)
 	default:
 		panic(errors.New("unsupported type"))
 	}

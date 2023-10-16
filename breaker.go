@@ -146,7 +146,7 @@ func (b *Breaker) afterCheck(pass bool) {
 		b.failureCount = 0
 		// 如果是半开状态并且持续成功次数达到成功阈值,则直接闭上,让链路可通
 		// 只有半开状态下,成功次数累加才有意义
-		if b.state == BreakerStateHalfOpen && AtomicAdd(&b.successCount, 1).(int) >= b.successThreshold {
+		if b.state == BreakerStateHalfOpen && AtomicAddInt(&b.successCount, 1).(int) >= b.successThreshold {
 			b.reset()
 			b.setState(BreakerStateClose)
 			return
