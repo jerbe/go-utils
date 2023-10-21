@@ -12,8 +12,8 @@ var (
 	_hostname = "localhost"
 )
 
-// GetHostname 获取本机名
-func GetHostname() string {
+// Hostname 获取本机名
+func Hostname() string {
 	if _hostname != "localhost" {
 		return _hostname
 	}

@@ -11,8 +11,8 @@ import (
   @describe :
 */
 
-// GetMasterIP 获取连接互联网的主IP地址
-func GetMasterIP() string {
+// MasterIP 获取连接互联网的主IP地址
+func MasterIP() string {
 	conn, err := net.DialTimeout("udp", "8.8.8.8:8", time.Second*5)
 	if err != nil {
 		return ""
@@ -22,8 +22,8 @@ func GetMasterIP() string {
 	return localAddr.IP.String()
 }
 
-// GetLocalIPv4 获取当前IPv4地址
-func GetLocalIPv4() string {
+// LocalIPv4 获取当前IPv4地址
+func LocalIPv4() string {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
 		return ""
@@ -37,8 +37,8 @@ func GetLocalIPv4() string {
 	return ""
 }
 
-// GetLocalIPv6 获取当前IPv6地址
-func GetLocalIPv6() string {
+// LocalIPv6 获取当前IPv6地址
+func LocalIPv6() string {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
 		return ""
